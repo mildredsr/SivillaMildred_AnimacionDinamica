@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Acuario Interactivo</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Acuario Interactivo</h1>
+  <br>
+  <p>Presiona las teclas correspondientes para atrapar cada pez.</p>
+  <p>A · B · C · D · E · F &nbsp; | &nbsp; ENTER = Release</p>
+  <br>
+  
+  <div class="acuario">
+    <canvas id="micanvas" width="1000" height="700"></canvas>
+    <img src="marco.png">
+  </div>
+
+  
+  <script src="keycodes.js"></script>
+  <script>
+
+    var canvas;
+    var context;
+
+    // Fondo
+    var fondo = new Image();
+    fondo.src = "fondop.jpeg";
+
+    // Peces
+    var pezA = new Image();
+    pezA.src = "Af.png";
+
+    var pezB = new Image();
+    pezB.src = "Bf.png";
+
+    var pezC = new Image();
+    pezC.src = "Cf.png";
+
+    var pezD = new Image();
+    pezD.src = "Df.png";
+
+    var pezE = new Image();
+    pezE.src = "Ef.png";
+
+    var pezF = new Image();
+    pezF.src = "Ff.png";
+
+
+    // Imágenes pez atrapado
+
+    var imagenA = new Image();
+    imagenA.src = "AA.jpg";
+
+    var imagenB = new Image();
+    imagenB.src = "AB.jpg";
+
+    var imagenC = new Image();
+    imagenC.src = "AC.jpg";
+
+    var imagenD = new Image();
+    imagenD.src = "AD.jpg";
+
+    var imagenE = new Image();
+    imagenE.src = "AE.jpg";
+
+    var imagenF = new Image();
+    imagenF.src = "AF.jpg";
+
+    // Posición peces
+    var xA = 100;
+    var yA = 100;
+
+    var xB = 700;
+    var yB = 200;
+
+    var xC = 300;
+    var yC = 400;
+
+    var xD = 700;
+    var yD = 100;
+
+    var xE = 100;
+    var yE = 400;
+
+    var xF = 450;
+    var yF = 250;
+
+    // Mov peces
+    var dxA = 2;
+    var dyA = 0;
+
+    var dxB = -2;
+    var dyB = 1;
+
+    var dxC = 1;
+    var dyC = -2;
+
+    var dxD = -1;
+    var dyD = -1;
+
+    var dxE = 2;
+    var dyE = 0;
+
+    var dxF = -1;
+    var dyF = 2;
+
+    var imagenMostrada = null;
+    
+    //peces volteando
+    function dibujarPez(imagen, x, y, ancho, alto, dx) {
+
+        context.save();
+
+        if (dx < 0) {
+
+            context.scale(-1, 1);
+
+            context.drawImage(
+                imagen,
+                -x - ancho,
+                y,
+                ancho,
+                alto
+            );
+
+        } else {
+
+            context.drawImage(
+                imagen,
+                x,
+                y,
+                ancho,
+                alto
+            );
+
+        }
+
+        context.restore();
+    }
+
+    function animate() {
+
+        requestAnimationFrame(animate);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        context.drawImage(
+            fondo,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        
+        // mostrar los peces sin atrapar aun
+        if (imagenMostrada == null) {
+
+            xA += dxA;
+            if (xA + 130 >= canvas.width || xA <= 0) {
+                dxA = -dxA;
+            }
+            
+
+            xB += dxB;
+            yB += dyB;
+
+            if (xB + 160 >= canvas.width || xB <= 0) {
+                dxB = -dxB;
+            }
+
+            if (yB + 110 >= canvas.height || yB <= 0) {
+                dyB = -dyB;
+            }
+
+
+            xC += dxC;
+            yC += dyC;
+
+            if (xC + 130 >= canvas.width || xC <= 0) {
+                dxC = -dxC;
+            }
+
+            if (yC + 80 >= canvas.height || yC <= 0) {
+                dyC = -dyC;
+            }
+
+
+            xD += dxD;
+            yD += dyD;
+
+            if (xD + 130 >= canvas.width || xD <= 0) {
+                dxD = -dxD;
+            }
+
+            if (yD + 80 >= canvas.height || yD <= 0) {
+                dyD = -dyD;
+            }
+
+
+            xE += dxE;
+            yE += dyE;
+
+            if (xE + 520 >= canvas.width || xE <= 0) {
+                dxE = -dxE;
+            }
+
+            if (yE + 320 >= canvas.height || yE <= 0) {
+                dyE = -dyE;
+            }
+
+
+            xF += dxF;
+            yF += dyF;
+
+            if (xF + 160 >= canvas.width || xF <= 0) {
+                dxF = -dxF;
+            }
+
+            if (yF + 110 >= canvas.height || yF <= 0) {
+                dyF = -dyF;
+            }
+
+            /*context.drawImage(pezA, xA, yA, 130, 80);
+            context.drawImage(pezB, xB, yB, 130, 80);
+            context.drawImage(pezC, xC, yC, 130, 80);
+            context.drawImage(pezD, xD, yD, 130, 80);
+            context.drawImage(pezE, xE, yE, 130, 80);
+            context.drawImage(pezF, xF, yF, 130, 80);*/
+
+            dibujarPez(pezA, xA, yA, 130, 80, dxA);
+            dibujarPez(pezB, xB, yB, 160, 110, dxB);
+            dibujarPez(pezC, xC, yC, 130, 80, dxC);
+            dibujarPez(pezD, xD, yD, 130, 80, dxD);
+            dibujarPez(pezE, xE, yE, 520, 320, dxE);
+            dibujarPez(pezF, xF, yF, 160, 110, dxF);
+
+
+            // Letras
+            context.font = "bold 25px Calibri";
+            context.fillStyle = "white";
+            context.textAlign = "center";
+
+            context.fillText("A", xA + 65, yA - 10);
+            context.fillText("B", xB + 65, yB - 10);
+            context.fillText("C", xC + 65, yC - 10);
+            context.fillText("D", xD + 65, yD - 10);
+            context.fillText("E", xE + 100, yE + 90);
+            context.fillText("F", xF + 65, yF - 10);
+        }
+
+
+        // Mostrar imagen captura
+        else {
+            context.drawImage(
+                imagenMostrada,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+        }
+    }
+
+    function iniciar() {
+        canvas = document.getElementById("micanvas");
+        context = canvas.getContext("2d");
+        animate();
+    }
+
+
+    function onKeyboardEvent(event) {
+        switch (event.keyCode) {
+            case keycode.A:
+                console.log("Letra A");
+                imagenMostrada = imagenA;
+                break;
+            case keycode.B:
+                console.log("Letra B");
+                imagenMostrada = imagenB;
+                break;
+            case keycode.C:
+                console.log("Letra C");
+                imagenMostrada = imagenC;
+                break;
+            case keycode.D:
+                console.log("Letra D");
+                imagenMostrada = imagenD;
+                break;
+            case keycode.E:
+                console.log("Letra E");
+                imagenMostrada = imagenE;
+                break;
+            case keycode.F:
+                console.log("Letra F");
+                imagenMostrada = imagenF;
+                break;
+            case keycode.ENTER:
+                console.log("Regresar");
+                imagenMostrada = null;
+                break;
+        }
+    }
+
+    window.addEventListener(
+        "keydown",
+        onKeyboardEvent,
+        false
+    );
+  window.onload = iniciar;
+
+  </script>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <li><regresar><a href="../../index.html" target="_blank">Regresar</a></li>
+  </body>
+</html>

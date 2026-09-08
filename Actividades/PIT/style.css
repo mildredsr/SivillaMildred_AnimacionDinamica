@@ -1,0 +1,53 @@
+body {
+      text-align: center;
+       background-color:rgb(244, 251, 255);
+       font-family: "Istok Web", sans-serif;
+       font-weight: 700;
+       font-style: normal;
+
+       background-image: url("fondoweb.jpeg");
+       background-size: cover;
+       background-repeat: no-repeat;
+       background-position: center top;
+       background-attachment: fixed;
+     }
+     h1 {
+       background: linear-gradient(to bottom, lightskyblue, rgb(12,124,205));
+       text-align: center;
+       color: rgb(254, 255, 255);
+       font-size: 40px;
+     }
+
+    p {
+        font-family: "Roboto", sans-serif;
+        font-size: 19px;
+        color: rgb(12, 124, 205);
+      }
+    
+    li {
+        background: linear-gradient(to bottom, rgb(116,190,71), rgb(92, 162, 48));
+        text-decoration: none;
+        text-align: center;
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+      }
+
+    .acuario {
+      position: relative;
+      display: inline-block;
+    }
+
+    .acuario canvas {
+      display: block;
+    }
+
+    .acuario img {
+      position: absolute;
+      top: -25px; 
+      left: -7px;
+      width: 1015px;
+      height: 900px;
+      
+    }
+
+
