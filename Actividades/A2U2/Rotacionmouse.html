@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Rotacion de Mouse</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Rotación de Miku</h1>
+    <br>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+    <br>
+    <aside>Move mouse on canvas element.</aside>
+    
+    <script src="utils.js"></script>
+    <!-- <script src="./classes/arrow.js"></script> -->
+    <script>
+
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          pelota = new Image();
+
+        pelota.src = "disco.png";
+        
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.save();
+        var x = canvas.width / 2;//coordenadas donde quieres que este posicionada la imagen en x, puedes poner un número
+        var y = canvas.height / 2; 
+
+        context.translate(x, y); //coordenadas donde quieres que aparezca tu imagen
+        var dx = mouse.x - x,
+            dy = mouse.y - y;
+        
+        var radianes = Math.atan2(dy, dx); //radians
+        console.log(radianes);
+        context.rotate(radianes); //radians
+        context.drawImage(pelota, -pelota.width/2, -pelota.height/2);
+        context.restore();
+      }());
+    };
+    </script>
+  <br>
+  <li><regresar><a href="../../index.html" target="_blank">Regresar</a></li>
+  </body>
+</html>
