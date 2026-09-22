@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Movimiento con onda sinusoidal</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <h1>CHAO GARDEN</h1>
+    <div class="contenedor-canvas">
+      <canvas id="canvas" width="1000" height="500"></canvas>
+      <button id="botonAudio">♫ Music</button>
+    </div>
+    <br>
+
+    <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+
+        var pelota = new Image();
+        pelota.src = "chao.png";
+
+        var x = 0;
+        var dx = 1.9;
+
+        var angle = 1.5;
+        var speed = 0.05;
+        var centerY = 200;
+        var range = 80;
+
+        // Tamaño personaje
+        var ancho = 200;
+        var alto = 200;
+
+        var audio = new Audio("audio.mp3");
+        document.getElementById("botonAudio").onclick = function() {
+          audio.play();
+        };
+
+        function dibujarImagen() {
+            context.save();
+            // Si va hacia la izquierda voltear la imagen
+            if (dx < 0) {
+                context.scale(-1, 1);
+                context.drawImage(
+                    pelota,
+                    -x - ancho,
+                    centerY + Math.sin(angle) * range,
+                    ancho,
+                    alto
+                );
+
+            } else {
+                context.drawImage(
+                    pelota,
+                    x,
+                    centerY + Math.sin(angle) * range,
+                    ancho,
+                    alto
+                );
+            }
+            context.restore();
+        }
+
+
+        function animate() {
+            requestAnimationFrame(animate);
+            context.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+            // Mov. h
+            x += dx;
+
+            // personaje voltea en bordes
+            if (x + ancho >= canvas.width || x <= 0) {
+                dx = -dx;
+            }
+
+            // Onda sinusoidal
+            var y = centerY + Math.sin(angle) * range;
+            angle += speed;
+
+
+            // Dibujar imagen
+            context.save();
+            if (dx < 0) {
+                context.scale(-1, 1);
+                context.drawImage(
+                    pelota,
+                    -x - ancho,
+                    y,
+                    ancho,
+                    alto
+                );
+            } else {
+                context.drawImage(
+                    pelota,
+                    x,
+                    y,
+                    ancho,
+                    alto
+                );
+            }
+            context.restore();
+        }
+
+        pelota.onload = function () {
+            animate();
+        };
+
+    </script>
+<br>
+  <li><regresar><a href="../../index.html" target="_blank">Regresar</a></li>
+</body>
+</html>
+
