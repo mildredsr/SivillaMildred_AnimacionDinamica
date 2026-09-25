@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Movimiento con onda senoidal</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Momo+Trust+Display&family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+  </style>
+
+  <body>
+    <h1>Mii Channel</h1>
+    <div class="contenedor-canvas">
+      <canvas id="canvas" width="500" height="500"></canvas>
+      <button id="botonAudio">♫ Music</button>
+    </div>
+    
+
+    <script>
+    window.onload = function () {
+
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          pelota = new Image();
+
+      pelota.src = "rin.png";
+
+      var angle = 0,
+          range = 0.1,
+          speed = 0.03;
+          tamaño = 0.3;
+      
+      var audio = new Audio("audiow.mp3");
+        document.getElementById("botonAudio").onclick = function() {
+          audio.play();
+        };
+
+      (function drawFrame () {
+
+        window.requestAnimationFrame(drawFrame, canvas);
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Movimiento vertical onda si
+        var x = canvas.width / 2;
+        var y = canvas.height / 2 + Math.sin(angle) * 80;
+
+        // escala
+        var escala = tamaño + Math.sin(angle) * range;
+
+        context.save();
+
+        context.translate(x, y);
+
+        context.scale(escala, escala);
+
+        context.drawImage(
+          pelota,
+          -pelota.width / 2,
+          -pelota.height / 2
+        );
+
+        context.restore();
+        angle += speed;
+
+      }());
+    };
+    </script>
+    <br>
+    <br>
+    <li><regresar><a href="../../index.html" target="_blank">Regresar</a></li>
+  </body>
+</html>
