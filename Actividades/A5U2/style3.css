@@ -1,0 +1,41 @@
+
+body {
+  text-align: center;
+    background-color:rgb(244, 251, 255);
+    font-family: "Istok Web", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+
+    background-image: url("fondowebd.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+h1 {
+    background: linear-gradient(to bottom, rgb(120, 219, 255), rgb(60,185,229));
+    text-align: center;
+    color: rgb(254, 255, 255);
+    font-size: 40px;
+}
+  
+#canvas {
+  background-color: #fff;
+  border: 3px solid rgb(60,185,229);
+}
+
+
+li {
+    background: linear-gradient(to bottom, rgb(229,230,227), rgb(208,209,216));
+    text-decoration: none;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+  }
+
+.contenedor-canvas {
+    position: relative;
+    display: inline-block;
+}
+

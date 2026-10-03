@@ -1,0 +1,846 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Dibujo de figuras en el canvas</title>
+
+  <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+  <div>
+    <h1>Dibujo de figuras en canvas</h1>
+  </div>
+  <canvas id="canvas" width="1000" height="500"></canvas>
+  <script>
+
+  window.onload = function () {
+
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d');
+
+
+    var cielo1 = '#020A2E';
+    var cielo2 = '#0A1F95';
+
+    var planetaFondo = '#0A1F95';
+    var planetaFondoClaro = '#94D3FD';
+
+    var verdePlaneta = '#65B12B';
+    var verdeOscuro = '#078010';
+
+    var casa = '#DEE3DF';
+    var techo = '#2F6FBE';
+    var puerta = '#BDB070';
+    var ventana = '#7AA2BF';
+
+    var verdePino = '#078010';
+    var tronco = '#BEA364';
+
+    var blancoEstrella = '#F6F9FD';
+
+    var amarilloEstrella = '#155FE5';
+    var amarilloEstrellaClaro = '#87F8FF';
+
+    var amarilloLuna = '#E9ED2F';
+
+    var rojoHongo = '#AA0001';
+    var rojoClaro = '#ED0108';
+    var blancoHongo = '#DEE3DF';
+
+
+    /* CIELO*/
+
+    var gradienteCielo = context.createLinearGradient(
+      0, 0,
+      0, 500
+    );
+
+    gradienteCielo.addColorStop(0, cielo1);
+    gradienteCielo.addColorStop(1, cielo2);
+
+    context.fillStyle = gradienteCielo;
+
+    context.fillRect(
+      0, 0,
+      1000, 500
+    );
+
+
+/* SOL */
+context.save();
+
+/* BRILLO DEL SOL */
+var gradienteSol = context.createRadialGradient(
+  850, 312, 20,
+  850, 312, 145
+);
+
+gradienteSol.addColorStop(0, 'rgba(187,230,241,0.90)');
+gradienteSol.addColorStop(0.25, 'rgba(187,230,241,0.55)');
+gradienteSol.addColorStop(0.55, 'rgba(187,230,241,0.20)');
+gradienteSol.addColorStop(1, 'rgba(187,230,241,0)');
+
+context.fillStyle = gradienteSol;
+context.beginPath();
+context.arc(
+  850,       // X
+  312,       // Y
+  145,       // TAMAÑO DEL BRILLO
+  0,
+  Math.PI * 2
+);
+
+context.fill();
+
+
+/* CÍRCULO CENTRAL DEL SOL */
+context.fillStyle = '#F6F9FD';
+context.beginPath();
+
+context.arc(
+  850,       // X
+  312,       // Y
+  62,        // TAMAÑO 
+  0,
+  Math.PI * 2
+);
+
+context.fill();
+
+context.restore();
+
+
+    /*  PLANETA FONDO */
+    context.save();
+    var gradientePlanetaFondo =
+      context.createLinearGradient(
+        0, 270,
+        0, 450
+      );
+
+    gradientePlanetaFondo.addColorStop(
+      0,
+      planetaFondoClaro
+    );
+
+    gradientePlanetaFondo.addColorStop(
+      1,
+      planetaFondo
+    );
+
+    context.fillStyle = gradientePlanetaFondo;
+    context.strokeStyle = '#94D3FD'; 
+    context.lineWidth = 3;
+    context.beginPath();
+
+    context.arc(
+      860,       // X
+      750,       // Y
+      450,       // RADIO / TAMAÑO
+      Math.PI,
+      2 * Math.PI
+    );
+    context.closePath();
+    context.fill();
+    context.stroke();
+    context.restore();
+
+
+    /* ESTRELLAS PEQUEÑAS */
+    context.save();
+    context.fillStyle = blancoEstrella;
+    var estrellas = [
+
+      [70, 60, 2],
+      [135, 115, 2],
+      [205, 55, 3],
+      [250, 145, 2],
+      [320, 85, 2],
+      [385, 45, 3],
+      [450, 125, 2],
+      [540, 55, 2],
+      [590, 145, 3],
+      [650, 75, 2],
+      [725, 45, 2],
+      [790, 150, 3],
+      [900, 60, 2],
+      [950, 130, 3],
+      [870, 230, 2],
+      [550, 210, 2],
+      [350, 190, 2],
+      [120, 220, 2]
+
+    ];
+
+    for (var i = 0; i < estrellas.length; i++) {
+
+      context.beginPath();
+
+      context.arc(
+        estrellas[i][0],
+        estrellas[i][1],
+        estrellas[i][2],
+        0,
+        Math.PI * 2
+      );
+
+      context.fill();
+    }
+    context.restore();
+
+
+    /*  Destello */
+    context.save();
+    context.fillStyle = amarilloEstrella;
+    context.strokeStyle = '#87F8FF';
+    context.lineWidth = 3;
+
+    var centroX = 500;
+    var centroY = 105;
+
+    var radioExterior = 55;
+    var radioInterior = 25;
+
+
+    context.beginPath();
+    for (var j = 0; j < 10; j++) {
+
+      var angulo =
+        -Math.PI / 2 +
+        j * Math.PI / 5;
+
+      var radio;
+
+      if (j % 2 == 0) {
+        radio = radioExterior;
+      } else {
+        radio = radioInterior;
+      }
+
+      var x =
+        centroX +
+        Math.cos(angulo) * radio;
+
+      var y =
+        centroY +
+        Math.sin(angulo) * radio;
+
+      if (j == 0) {
+        context.moveTo(x, y);
+      } else {
+        context.lineTo(x, y);
+      }
+    }
+
+    context.closePath();
+
+    context.fill();
+    context.stroke();
+
+
+    /* BRILLO */
+
+    context.fillStyle = amarilloEstrellaClaro;
+    context.beginPath();
+    context.ellipse(
+      509,
+      98,
+      10,
+      18,
+      -0.4,
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+
+    /* OJO IZQUIERDO E*/
+    context.fillStyle = '#06050D';
+    context.beginPath();
+    context.ellipse(
+      490,
+      105,
+      5,
+      11,
+      0,
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+
+    /* OJO DERECHO E */
+    context.beginPath();
+    context.ellipse(
+      510,
+      105,
+      5,
+      11,
+      0,
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+    context.restore();
+
+
+    /*LUNA*/
+    context.save();
+    context.fillStyle = amarilloLuna;
+    context.strokeStyle = '#FCFE90';
+    context.lineWidth = 3;
+
+
+    /* CUERPO LUNA */
+    context.beginPath();
+    context.arc(
+      120,       // X
+      100,       // Y
+      58,        // TAMAÑO
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+    context.stroke();
+
+  
+
+    /* PARTE QUE TAPA LA LUNA */
+    context.fillStyle = '#040D41';
+    context.beginPath();
+    context.arc(
+      75,        // X
+      82,        // Y
+      50,        // TAMAÑO
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+
+     /* BRILLO DETRÁS DE LA LUNA */
+    var gradienteLuna = context.createRadialGradient(
+      120, 100, 20,
+      120, 100, 100
+    );
+    gradienteLuna.addColorStop(
+      0,
+      'rgba(252, 254, 144, 0.45)'
+    );
+    gradienteLuna.addColorStop(
+      0.4,
+      'rgba(252, 254, 144, 0.20)'
+    );
+    gradienteLuna.addColorStop(
+      1,
+      'rgba(252, 254, 144, 0)'
+    );
+
+    context.fillStyle = gradienteLuna;
+    context.beginPath();
+    context.arc(
+      120,       // X
+      100,       // Y
+      100,       // TAMAÑO DEL BRILLO
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+
+    /* PUNTAS DE LA LUNA*/
+    context.fillStyle = amarilloLuna;
+    context.strokeStyle = '#FCFE90';
+    context.lineWidth = 2;
+
+
+    /* C PUNTA SUPERIOR */
+    context.beginPath();
+    context.arc(
+      110,       // X
+      44,        // Y
+      8,         // TAMAÑO
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+    context.stroke();
+
+    /* C PUNTA INFERIOR */
+    context.beginPath();
+    context.arc(
+      73,       // X
+      135,       // Y
+      8,         // TAMAÑO
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+    context.stroke();
+
+    /* OJOS DE LA LUNA*/
+    context.fillStyle = '#06050D';
+
+    /* OJO IZQUIERDO LUNA */
+    context.beginPath();
+    context.ellipse(
+      134,       // X
+      108,       // Y
+      4,
+      10,
+      0,
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+
+    /* OJO DERECHO LUNA */
+    context.beginPath();
+    context.ellipse(
+      152,       // X
+      108,       // Y
+      4,
+      10,
+      0,
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+
+
+   /* HONGO */
+    context.save();
+
+    context.strokeStyle = '#AA0001';
+    context.lineWidth = 3;
+
+    /* DEGRADADO DEL HONGO */
+    var gradienteHongo =
+      context.createRadialGradient(
+        720, 225, 5,
+        720, 235, 80
+      );
+
+    gradienteHongo.addColorStop(
+      0,
+      rojoClaro
+    );
+
+    gradienteHongo.addColorStop(
+      1,
+      rojoHongo
+    );
+
+    context.fillStyle = gradienteHongo;
+
+
+    /* PARTE ROJA */
+    context.beginPath();
+    context.ellipse(
+      720,       // X
+      235,       // Y
+      80,        // ANCHO
+      58,        // ALTO
+      0,
+      0,
+      Math.PI * 2
+    );
+
+    context.fill();
+    context.stroke();
+
+
+    /* MANCHAS DEL HONGO */
+
+    context.fillStyle = blancoHongo;
+
+    /* MANCHA CENTRAL */
+    context.beginPath();
+    context.ellipse(
+      720,
+      214,
+      18,
+      22,
+      0,
+      0,
+      Math.PI * 2
+    );
+
+    context.fill();
+
+
+    /* MANCHA IZQUIERDA */
+    context.beginPath();
+    context.ellipse(
+      673,
+      232,
+      10,
+      19,
+      -0.2,
+      0,
+      Math.PI * 2
+    );
+
+    context.fill();
+
+
+    /* MANCHA DERECHA */
+    context.beginPath();
+    context.ellipse(
+      767,
+      232,
+      10,
+      19,
+      0.2,
+      0,
+      Math.PI * 2
+    );
+
+    context.fill();
+
+
+    /* TRONCO DEL HONGO */
+    context.fillStyle = '#C5CFC7';
+    context.strokeStyle = '#AEB7B0';
+    context.lineWidth = 3;
+    context.beginPath();
+    context.moveTo(687, 275);
+    context.bezierCurveTo(
+      691, 288,
+      695, 305,
+      710, 312
+    );
+
+    context.lineTo(730, 312);
+    context.bezierCurveTo(
+      745, 305,
+      749, 288,
+      753, 275
+    );
+
+    context.closePath();
+    context.fill();
+    context.stroke();
+    context.restore();
+
+
+    /* SUELO / PLANETA VERDE*/
+    context.save();
+    context.strokeStyle = '#65B12B';
+    context.lineWidth = 4;
+
+    var gradientePlaneta =
+      context.createLinearGradient(
+        0, 285,
+        0, 500
+      );
+
+    gradientePlaneta.addColorStop(
+      0,
+      verdePlaneta
+    );
+
+    gradientePlaneta.addColorStop(
+      1,
+      verdeOscuro
+    );
+    context.fillStyle = gradientePlaneta;
+    context.beginPath();
+    context.moveTo(-80, 500);
+
+    context.bezierCurveTo(
+      -20, 365,
+      100, 310,
+      250, 320
+    );
+    context.bezierCurveTo(
+      370, 328,
+      455, 390,
+      520, 500
+    );
+
+    context.closePath();
+    context.fill();
+    context.stroke();
+    context.restore();
+
+
+    /*CAMINO*/
+
+    context.save();
+    context.fillStyle = '#BEA364';
+    context.beginPath();
+    context.moveTo(
+      220, 500
+    );
+
+    context.bezierCurveTo(
+      230, 455,
+      255, 420,
+      290, 395
+    );
+
+    context.bezierCurveTo(
+      305, 385,
+      325, 390,
+      335, 405
+    );
+
+    context.bezierCurveTo(
+      295, 435,
+      280, 470,
+      280, 500
+    );
+
+    context.closePath();
+    context.fill();
+    context.restore();
+
+
+    /* CASA*/
+    context.save();
+    context.lineWidth = 3;
+    context.lineJoin = 'round';
+    context.strokeStyle = '#020A2E';
+
+
+    /* TECHO*/
+    context.fillStyle = techo;
+    context.beginPath();
+    context.moveTo(145, 350);
+    context.lineTo(185, 270);
+    context.lineTo(340, 270);
+    context.lineTo(385, 350);
+    context.closePath();
+    context.fill();
+    context.stroke();
+
+
+    /* ESTRUCTURA */
+    context.fillStyle = casa;
+    context.fillRect(
+      175,
+      350,
+      180,
+      95
+    );
+    context.strokeRect(
+      175,
+      350,
+      180,
+      95
+    );
+
+
+    /* PUERTA */
+    context.fillStyle = puerta;
+    context.fillRect(
+      245,
+      390,
+      40,
+      55
+    );
+    context.strokeRect(
+      245,
+      390,
+      40,
+      55
+    );
+
+    /* VENTANA IZQUIERDA*/
+    context.fillStyle = ventana;
+
+    /* PANEL 1 */
+    context.fillRect(
+      193,
+      368,
+      18,
+      18
+    );
+
+    /* PANEL 2 */
+    context.fillRect(
+      214,
+      368,
+      18,
+      18
+    );
+
+    /* PANEL 3 */
+    context.fillRect(
+      193,
+      389,
+      18,
+      18
+    );
+
+    /* PANEL 4 */
+    context.fillRect(
+      214,
+      389,
+      18,
+      18
+    );
+
+    /* MARCO */
+    context.strokeStyle = '#BDB070';
+    context.lineWidth = 3;
+    context.strokeRect(
+      190,
+      365,
+      45,
+      45
+    );
+
+    /* VENTANA DERECHA */
+    context.fillStyle = ventana;
+
+    /* PANEL 1 */
+    context.fillRect(
+      295,
+      368,
+      18,
+      18
+    );
+
+    /* PANEL 2 */
+    context.fillRect(
+      316,
+      368,
+      18,
+      18
+    );
+
+    /* PANEL 3 */
+    context.fillRect(
+      295,
+      389,
+      18,
+      18
+    );
+
+    /* PANEL 4 */
+    context.fillRect(
+      316,
+      389,
+      18,
+      18
+    );
+
+    /* MARCO */
+    context.strokeStyle = '#BDB070';
+    context.lineWidth = 3;
+    context.strokeRect(
+      292,
+      365,
+      45,
+      45
+    );
+    context.restore();
+
+    /*PINO IZQUIERDO*/
+    context.save();
+    context.strokeStyle = '#243D1F';
+    context.lineWidth = 3;
+
+    /* TRONCO */
+    context.fillStyle = tronco;
+    context.fillRect(
+      79,
+      425,
+      12,
+      45
+    );
+
+    /* COPA INFERIOR */
+    context.fillStyle = verdePino;
+    context.beginPath();
+    context.moveTo(55, 430);
+    context.lineTo(85, 385);
+    context.lineTo(115, 430);
+    context.closePath();
+    context.fill();
+    context.stroke();
+
+    /* COPA SUPERIOR */
+    context.beginPath();
+    context.moveTo(65, 390);
+    context.lineTo(85, 345);
+    context.lineTo(105, 390);
+    context.closePath();
+    context.fill();
+    context.stroke();
+    context.restore();
+
+    /* PINO CENTRAL */
+    context.save();
+    context.strokeStyle = '#243D1F';
+    context.lineWidth = 3;
+
+    /* TRONCO */
+    context.fillStyle = tronco;
+    context.fillRect(
+      414,
+      435,
+      12,
+      40
+    );
+
+    /* COPA INFERIOR */
+    context.fillStyle = verdePino;
+    context.beginPath();
+    context.moveTo(390, 440);
+    context.lineTo(420, 395);
+    context.lineTo(450, 440);
+    context.closePath();
+    context.fill();
+    context.stroke();
+
+    /* COPA SUPERIOR */
+    context.beginPath();
+    context.moveTo(400, 400);
+    context.lineTo(420, 355);
+    context.lineTo(440, 400);
+    context.closePath();
+    context.fill();
+    context.stroke();
+    context.restore();
+
+    /* PINO DERECHO */
+    context.save();
+    context.strokeStyle = '#243D1F';
+    context.lineWidth = 3;
+
+    /* TRONCO */
+    context.fillStyle = tronco;
+    context.fillRect(
+      104,
+      310,
+      10,
+      30
+    );
+
+    /* COPA INFERIOR */
+    context.fillStyle = verdePino;
+    context.beginPath();
+    context.moveTo(85, 315);
+    context.lineTo(109, 270);
+    context.lineTo(133, 315);
+    context.closePath();
+    context.fill();
+    context.stroke();
+
+    /* COPA SUPERIOR */
+    context.beginPath();
+    context.moveTo(93, 275);
+    context.lineTo(109, 230);
+    context.lineTo(125, 275);
+    context.closePath();
+    context.fill();
+    context.stroke();
+    context.restore();
+
+  };
+
+  </script>
+  <br>
+  <br>
+  <li><regresar><a href="../../index.html" target="_blank">Regresar</a></li>
+</body>
+</html>
