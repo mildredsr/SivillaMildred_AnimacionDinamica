@@ -1,0 +1,162 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Floating Leaf</title>
+  <link rel="stylesheet" href="style6.css">
+</head>
+
+<body>
+  <main>
+    <h1>FLOATING LEAF</h1>
+
+    <div class="pool-frame">
+      <div class="pool-water">
+
+        <img
+          id="water-background"
+          src="fondoc.gif"
+          alt=""
+        >
+
+        <canvas id="canvas" width="1000" height="500"></canvas>
+
+      </div>
+    </div>
+
+    <section class="instructions">
+      <p>Press left and right arrow keys to rotate ship, up to add thrust.</p>
+    </section>
+
+    <div class="volver">
+      <a href="../../index.html" target="_blank">Regresar</a>
+    </div>
+  </main>
+
+  <script src="ship.js"></script>
+
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById("canvas");
+      var context = canvas.getContext("2d");
+
+      var ship = new Ship();
+
+      ship.x = canvas.width / 2;
+      ship.y = canvas.height / 2;
+
+      var vx = 0;
+      var vy = 0;
+      var vr = 0;
+      var thrust = 0;
+
+      var friction = 0.985;
+      var rotationSpeed = 0.045;
+      var acceleration = 0.10;
+
+      var keys = {};
+
+      window.addEventListener("keydown", function (event) {
+        if (
+          event.key === "ArrowLeft" ||
+          event.key === "ArrowRight" ||
+          event.key === "ArrowUp"
+        ) {
+          event.preventDefault();
+        }
+
+        keys[event.key] = true;
+      });
+
+      window.addEventListener("keyup", function (event) {
+        keys[event.key] = false;
+      });
+
+      window.addEventListener("blur", function () {
+        keys = {};
+      });
+
+      function drawFrame() {
+        requestAnimationFrame(drawFrame);
+
+        // No borrar el fondo con clearRect:
+        // el agua animada está en una imagen HTML detrás del canvas.
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        vr = 0;
+        thrust = 0;
+
+        if (keys["ArrowLeft"]) {
+          vr = -rotationSpeed;
+        }
+
+        if (keys["ArrowRight"]) {
+          vr = rotationSpeed;
+        }
+
+        if (keys["ArrowUp"]) {
+          thrust = acceleration;
+        }
+
+        ship.rotation += vr;
+
+        var angle = ship.rotation;
+
+        vx += Math.cos(angle) * thrust;
+        vy += Math.sin(angle) * thrust;
+
+        // Fricción
+        vx *= friction;
+        vy *= friction;
+
+        ship.x += vx;
+        ship.y += vy;
+
+        // Límites del canvas
+        var margin = Math.max(ship.width, ship.height) / 2;
+
+        if (ship.x < margin) {
+          ship.x = margin;
+          if (vx < 0) vx = 0;
+        }
+
+        if (ship.x > canvas.width - margin) {
+          ship.x = canvas.width - margin;
+          if (vx > 0) vx = 0;
+        }
+
+        if (ship.y < margin) {
+          ship.y = margin;
+          if (vy < 0) vy = 0;
+        }
+
+        if (ship.y > canvas.height - margin) {
+          ship.y = canvas.height - margin;
+          if (vy > 0) vy = 0;
+        }
+
+        // Ondas agua
+        var speed = Math.sqrt(vx * vx + vy * vy);
+
+        if (speed > 0.5) {
+          ship.rippleTimer++;
+
+          if (ship.rippleTimer >= 14) {
+            ship.createRipple();
+            ship.rippleTimer = 0;
+          }
+        } else {
+          ship.rippleTimer = 0;
+        }
+        ship.drawRipples(context);
+        ship.draw(context);
+      }
+
+      drawFrame();
+    };
+  </script>
+</body>
+</html>
