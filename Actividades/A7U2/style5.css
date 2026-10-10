@@ -1,0 +1,105 @@
+
+aside, footer, header, nav, section {
+  display: block;
+}
+
+body {
+  text-align: center;
+    background-color:rgb(244, 251, 255);
+    font-family: "Istok Web", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+
+    background-image: url("fondowebr.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+h1 {
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: "Exo 2", sans-serif;
+  font-size: 90px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(244, 252, 255, 0.400),
+    rgba(156, 219, 255, 0.5),
+    rgba(71, 204, 252, 0.45),
+    rgba(188, 245, 255, 0.585),
+    rgba(77, 208, 255, 0.5)
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+
+  filter: drop-shadow(0 0 4px rgba(3, 16, 86, 0.5))
+          drop-shadow(0 0 12px rgba(71, 193, 237, 0.35));
+
+}
+
+h2{
+  color: rgba(244, 245, 247, 0.8);
+  text-align: center;
+  font-family: "Exo 2", sans-serif;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+
+}
+  
+.contenedor-canvas {
+  display: inline-block;
+  border: 40px solid rgba(71, 193, 237, 0.65);
+  border-radius: 100px;
+  overflow: hidden;
+
+  box-shadow:
+    0 0 20px rgba(3, 16, 86, 0.5),
+    inset 0 0 20px rgba(255, 255, 255, 0.8);
+
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: -10px;
+  
+}
+
+#canvas {
+  display: block;
+  background-color: #fff;
+  background-image: url("fondor.png");
+  background-repeat: no-repeat;
+  background-size: 600px 600px;
+
+  border: none;
+  border-radius: 3px;
+}
+
+li {
+    background: linear-gradient(to bottom, rgba(244, 252, 255, 0.400), rgba(121, 217, 252, 0.45));
+    text-decoration: none;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-size: 25px;
+    list-style: none;
+  }
+
+li a {
+    color: rgb(240, 249, 255);
+    text-decoration: none;
+
+    text-shadow: 0 0 8px rgba(3, 16, 86, 0.5);
+  }
+
+.contenedor-canvas {
+    position: relative;
+    display: inline-block;
+}
+

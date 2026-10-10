@@ -1,0 +1,106 @@
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Reloj Simulado</title>
+    <link rel="stylesheet" href="style5.css">
+  </head>
+
+  <body>
+    <h1>Reloj Simulado</h1>
+    <h2>Click on the canvas to play music</h2>
+    <div class="contenedor-canvas">
+      <canvas id="canvas" width="600" height="600"></canvas>
+    </div>
+    <script src="utils.js"></script>
+    <script src="./classes/arrow.js"></script>
+
+    <audio id="musica" loop>
+      <source src="musicar.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          vr1 = .05,
+          vr2 = .6,
+          vr3 = .36;
+
+      // IMAGEN MANECILLAS
+      var hora = new Image();
+      hora.src = "horas.png";
+
+      var minutos = new Image();
+      minutos.src = "minutos.png";
+
+      var segundos = new Image();
+      segundos.src = "segundos.png";
+
+      // ANGULOS DE ROTACION
+      var radianes1 = 0;
+      var radianes2 = 0;
+      var radianes3 = 0;
+
+      var musica = document.getElementById("musica");
+
+        canvas.addEventListener("click", function () {
+          musica.play();
+        }, { once: true });
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(
+          0, 0,
+          canvas.width,
+          canvas.height
+        );
+
+        // HORAS
+        context.save();
+        context.translate(300, 300);
+        radianes1 += vr1 * Math.PI / 180;
+        context.rotate(radianes1);
+        context.drawImage(
+          hora,
+          -hora.width / 2,
+          -hora.height / 2
+        );
+        context.restore();
+
+        // MINUTOS
+        context.save();
+        context.translate(300, 300);
+        radianes2 += vr2 * Math.PI / 180;
+        context.rotate(radianes2);
+        context.drawImage(
+          minutos,
+          -minutos.width / 2,
+          -minutos.height / 2
+        );
+        context.restore();
+
+        // SEGUNDOS
+        context.save();
+        context.translate(300, 300);
+        radianes3 += vr3 * Math.PI / 180;
+        context.rotate(radianes3);
+        context.drawImage(
+          segundos,
+          -segundos.width / 2,
+          -segundos.height / 2
+        );
+        context.restore();
+
+      }());
+
+    };
+    </script>
+    <br>
+    <br>
+    <li><regresar><a href="../../index.html" target="_blank">Regresar</a></li>
+
+  </body>
+</html>
