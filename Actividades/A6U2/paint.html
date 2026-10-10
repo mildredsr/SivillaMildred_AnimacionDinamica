@@ -1,0 +1,207 @@
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paint</title>
+  <link rel="stylesheet" href="style4.css">
+</head>
+
+<body>
+
+  <div class="ventana-paint">
+
+    <div class="barra-titulo">
+      <span>🎨 Mi Paint - untitled</span>
+      <span class="boton-cerrar">−　□　×</span>
+    </div>
+
+    <div class="menu-paint">
+      Archivo　 Edición　 Ver　 Ayuda
+    </div>
+
+    <div class="herramientas">
+
+      <div class="grupo">
+        <p>Colores</p>
+        <div class="colores">
+          <button class="color seleccionado" data-color="#1C2C30" data-name="Black" style="background:#1C2C30" aria-label="Black"></button>
+          <button class="color" data-color="#EC9200" data-name="Tangerine" style="background:#EC9200" aria-label="Tangerine"></button>
+          <button class="color" data-color="#0C7CCD" data-name="Blue" style="background:#0C7CCD" aria-label="Blue"></button>
+          <button class="color" data-color="#81E6FD" data-name="Cyan" style="background:#81E6FD" aria-label="Cyan"></button>
+          <button class="color" data-color="#32D2CA" data-name="Aqua" style="background:#32D2CA" aria-label="Aqua"></button>
+          <button class="color" data-color="#72BC46" data-name="Lime" style="background:#72BC46" aria-label="Lime"></button>
+          <button class="color" data-color="#CDEE04" data-name="Electric Lime" style="background:#CDEE04" aria-label="Electric Lime"></button>
+        </div>
+      </div>
+
+      <div class="grupo">
+        <p>Grosor del pincel</p>
+        <div class="grosores">
+          <button class="grosor seleccionado" data-width="3">Fino</button>
+          <button class="grosor" data-width="8">Medio</button>
+          <button class="grosor" data-width="16">Grueso</button>
+        </div>
+      </div>
+
+      <div class="grupo">
+        <p>Herramientas</p>
+        <div class="acciones">
+          <button id="borrador">Borrador</button>
+          <button id="deshacer">Deshacer</button>
+          <button id="limpiar">Borrar todo</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="estado-barra">
+      <span id="estado">Color: Black</span>
+    </div>
+
+    <div class="area-dibujo">
+      <canvas id="canvas" width="1000" height="550"></canvas>
+    </div>
+
+  </div>
+
+  <div class="volver">
+    <a href="../../index.html" target="_blank">Regresar</a>
+  </div>
+
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+
+      var colorActual = '#1C2C30';
+      var grosorActual = 3;
+      var borradorActivo = false;
+      var dibujando = false;
+
+      var historial = [];
+      var estado = document.getElementById('estado');
+
+      function obtenerPosicion(event) {
+        var rect = canvas.getBoundingClientRect();
+
+        return {
+          x: (event.clientX - rect.left) * canvas.width / rect.width,
+          y: (event.clientY - rect.top) * canvas.height / rect.height
+        };
+      }
+
+      function guardarDibujo() {
+        historial.push(
+          context.getImageData(0, 0, canvas.width, canvas.height)
+        );
+      }
+
+      // Dibujar
+      canvas.addEventListener('mousedown', function (event) {
+        guardarDibujo();
+
+        var posicion = obtenerPosicion(event);
+
+        dibujando = true;
+        context.beginPath();
+        context.moveTo(posicion.x, posicion.y);
+        context.strokeStyle = borradorActivo ? '#ffffff' : colorActual;
+        context.lineWidth = borradorActivo
+          ? Math.max(grosorActual * 3, 20)
+          : grosorActual;
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
+
+        context.lineTo(posicion.x + 0.1, posicion.y + 0.1);
+        context.stroke();
+      });
+
+      canvas.addEventListener('mousemove', function (event) {
+        if (!dibujando) {
+          return;
+        }
+
+        var posicion = obtenerPosicion(event);
+        context.lineTo(posicion.x, posicion.y);
+        context.stroke();
+      });
+
+      function terminarTrazo() {
+        dibujando = false;
+        context.closePath();
+      }
+
+      canvas.addEventListener('mouseup', terminarTrazo);
+      canvas.addEventListener('mouseleave', terminarTrazo);
+
+      // Color pincel
+      var botonesColor = document.querySelectorAll('.color');
+
+      botonesColor.forEach(function (boton) {
+        boton.addEventListener('click', function () {
+          colorActual = boton.dataset.color;
+          borradorActivo = false;
+
+          botonesColor.forEach(function (otro) {
+            otro.classList.remove('seleccionado');
+          });
+
+          boton.classList.add('seleccionado');
+          document.getElementById('borrador')
+            .classList.remove('seleccionado');
+
+          estado.textContent = 'Color: ' + boton.dataset.name;
+        });
+      });
+
+      // Grosor pincel
+      var botonesGrosor = document.querySelectorAll('.grosor');
+
+      botonesGrosor.forEach(function (boton) {
+        boton.addEventListener('click', function () {
+          grosorActual = Number(boton.dataset.width);
+
+          botonesGrosor.forEach(function (otro) {
+            otro.classList.remove('seleccionado');
+          });
+
+          boton.classList.add('seleccionado');
+        });
+      });
+
+      // Activa y desactiva el borrador
+      document.getElementById('borrador')
+        .addEventListener('click', function () {
+          borradorActivo = !borradorActivo;
+
+          this.classList.toggle('seleccionado', borradorActivo);
+
+          estado.textContent = borradorActivo
+            ? 'Herramienta: borrador'
+            : 'Color: ' + document.querySelector('.color.seleccionado').dataset.name;
+        });
+
+      // Regresar
+      document.getElementById('deshacer')
+        .addEventListener('click', function () {
+          if (historial.length > 0) {
+            var dibujoAnterior = historial.pop();
+
+            context.putImageData(dibujoAnterior, 0, 0);
+          }
+        });
+
+      // Borra todo 
+      document.getElementById('limpiar')
+        .addEventListener('click', function () {
+          guardarDibujo();
+          context.clearRect(0, 0, canvas.width, canvas.height);
+        });
+    };
+  </script>
+
+</body>
+</html>
