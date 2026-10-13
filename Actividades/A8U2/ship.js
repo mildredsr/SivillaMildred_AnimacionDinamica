@@ -4,8 +4,8 @@ function Ship() {
   this.y = 0;
   this.rotation = -Math.PI / 2;
 
-  this.width = 60;
-  this.height = 60;
+  this.width = 85;
+  this.height = 85;
 
   this.image = new Image();
   this.image.src = "hoja.png";
