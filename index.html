@@ -9,64 +9,292 @@
 
     <style>
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            background-color: rgb(244, 251, 255);
+            min-height: 100vh;
             font-family: Arial, sans-serif;
             text-align: center;
+
+            background-color: rgb(100, 205, 225);
+
+            background-image:
+                linear-gradient(
+                    rgba(0, 105, 175, 0.25),
+                    rgba(0, 155, 195, 0.30)
+                ),
+                url("indeximg.gif");
+
+            background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
         h1 {
+            position: relative;
+            isolation: isolate;
+
             font-family: "Istok Web", sans-serif;
             margin: 0;
-            padding: 30px;
-            color: white;
-            background-color: rgb(12,124,205);
-            font-size: 40px;
+            padding: 35px 15px;
+            font-size: 44px;
+            letter-spacing: 2px;
+
+            color: #ffffff;
+            background: transparent;
+
+            text-shadow:
+                0 2px 4px rgba(0, 75, 130, 0.65),
+                0 0 12px rgba(100, 225, 255, 0.8);
         }
 
-        .encabezado {
+
+        h1::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+
+            background: rgba(0, 115, 185, 0.35);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.65);
+
+            box-shadow:
+                0 4px 15px rgba(0, 80, 150, 0.12),
+                inset 0 2px 8px rgba(255,255,255,0.2);
+        }
+
+        .perfil {
+            width: 125px;
+            height: 125px;
+
+            margin: 35px auto 15px;
+            padding: 5px;
+
+            border-radius: 50%;
+
+            background: linear-gradient(
+                145deg,
+                white,
+                #a4f2ff,
+                #45b9ed,
+                white
+            );
+
+            box-shadow:
+                0 5px 22px rgba(0, 120, 200, 0.35),
+                inset 0 2px 5px white;
+        }
+
+        .perfil img {
             width: 100%;
-            height: 300px;
+            height: 100%;
+
             object-fit: cover;
-            display: block;
+            border-radius: 50%;
+
+            border: 2px solid rgba(255,255,255,0.9);
+        }
+
+
+        .presentacion {
+            display: inline-block;
+
+            margin: 5px 15px 15px;
+            padding: 3px 30px;
+
+            background: rgba(255, 255, 255, 0.30);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 30px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 100, 180, 0.15),
+                inset 0 2px 5px rgba(255,255,255,0.65);
         }
 
         h2 {
             font-family: "Istok Web", sans-serif;
-            color: rgb(116,190,71);
-            font-size: 28px;
-            margin-top: 30px;
+            color: white;
+            font-size: 23px;
+
+            text-shadow:
+                0 2px 5px rgba(0,70,130,0.5);
+        }
+
+
+        .contenedor {
+            width: 85%;
+            max-width: 750px;
+            margin: 30px auto;
         }
 
         h3 {
             font-family: "Istok Web", sans-serif;
-            color: rgb(50, 80, 150);
-            font-size: 24px;
+            color: white;
+            font-size: 30px;
+
+            text-shadow:
+                0 3px 8px rgba(0,70,130,0.6);
+
+            margin-bottom: 25px;
         }
 
-        h4 {
-            font-family: "Istok Web", sans-serif;
-            color: rgb(50, 80, 150);
-            font-size: 24px;
-        }
-        
-         h5 {
-            font-family: "Istok Web", sans-serif;
-            color: rgb(50, 80, 150);
-            font-size: 24px;
+
+        .unidad {
+            position: relative;
+            overflow: hidden;
+
+            background: rgba(220, 248, 255, 0.25);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            padding: 28px;
+            margin-bottom: 28px;
+
+            border-radius: 22px;
+            border: 1px solid rgba(255,255,255,0.65);
+
+            box-shadow:
+                0 8px 25px rgba(0, 80, 150, 0.15),
+                inset 0 2px 8px rgba(255,255,255,0.45);
         }
 
-        a {
+
+        .unidad::before {
+            content: "";
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 45%;
+
+            background: linear-gradient(
+                180deg,
+                rgba(255,255,255,0.25),
+                transparent
+            );
+
+            pointer-events: none;
+        }
+
+        h4, h5 {
+            position: relative;
+
             font-family: "Istok Web", sans-serif;
-            color: rgb(12, 124, 205);
-            font-size: 15px;
+            color: rgb(15, 100, 165);
+            font-size: 25px;
+
+            margin-top: 0;
+
+            text-shadow:
+                0 1px 2px rgba(255,255,255,0.8);
+        }
+
+
+        .unidad a {
+            position: relative;
+            display: block;
+
+            font-family: "Istok Web", sans-serif;
+            color: rgb(15, 105, 165);
+
+            font-size: 16px;
             font-weight: bold;
             text-decoration: none;
+
+            background: rgba(255,255,255,0.38);
+
+            padding: 14px;
+            margin: 11px auto;
+
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.75);
+
+            box-shadow:
+                0 3px 8px rgba(0,100,160,0.10),
+                inset 0 2px 5px rgba(255,255,255,0.65);
+
+            transition: 0.3s;
         }
 
-        a:hover {
-            text-decoration: underline;
+        .unidad a:hover {
+            background: rgba(255,255,255,0.90);
+
+            color: rgb(0, 125, 205);
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 6px 15px rgba(0,120,190,0.20),
+                inset 0 2px 8px white;
+        }
+
+        .pie {
+            background: rgba(0, 110, 180, 0.45);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            color: white;
+            padding: 22px;
+            margin-top: 45px;
+
+            border-top: 1px solid rgba(255,255,255,0.6);
+
+            text-shadow:
+                0 2px 4px rgba(0,60,120,0.5);
+        }
+
+
+        @media (max-width: 600px) {
+
+            body {
+                background-size: 100% 100%;
+                background-position: center center;
+                background-attachment: scroll;
+                background-repeat: no-repeat;
+            }
+
+            h1 {
+                font-size: 32px;
+                padding: 28px 10px;
+            }
+
+            .perfil {
+                width: 105px;
+                height: 105px;
+            }
+
+            .contenedor {
+                width: 92%;
+            }
+
+            .unidad {
+                padding: 18px;
+            }
+
+            .unidad a {
+                font-size: 14px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
         }
 
     </style>
@@ -75,47 +303,59 @@
 <body>
 
     <h1>Animación Dinámica</h1>
-
-    <img class="encabezado"
-         src="indeximg.jpg"
-         alt="Imagen de encabezado">
-
-    <h2>Mildred Sivilla Ramirez, 38919</h2>
-
-    <h3>Actividades</h3>
-    
-    <h3>Unidad 1</h3>
-    <a href="Actividades/A2/pagina 1.html">Actividad 2: Página html básica</a>
     <br>
-    <a href="Actividades/PGG/actextra.html">Actividad Página Golden Globes</a>
-    <br>
-    <a href="Actividades/A4/artecanvas.html">Actividad 4: Arte en Canvas</a>
-    <br>
-    <a href="Actividades/A4.2/retocanvas.html">Actividad Retocanvas</a>
-    <br>
-    <a href="Actividades/PIT/proyectoteclado.html">Proyecto: Interactivo con el teclado</a>
-    <br>
-    <h4>Unidad 2</h4>
-    <a href="Actividades/A2U2/Rotacionmouse.html">Actividad 2: Animación rotación al mouse</a>
-    <br>
-    <a href="Actividades/A3U2/ondasi.html">Actividad 3: Animación con onda sinoidal</a>
-    <br>
-    <a href="Actividades/A4U2/RetoOndasSi.html">Actividad 4: Reto onda sinoidal</a>
-    <br>
-    <a href="Actividades/A5U2/dibujocanvas.html">Actividad 5: Dibujo de figuras en el canvas </a>
-    <br>
-    <a href="Actividades/A6U2/paint.html">Actividad 6: Paint App personalizado </a>
-    <br>
-    <a href="Actividades/A7U2/simreloj.html">Actividad 7: Simulación de reloj </a>
-    <br>
-    <a href="Actividades/A8U2/nave.html">Actividad 8: Nave personalizada </a>
-    <br>
-    <h5>Unidad 3</h5>
-    <a href="Actividades/A2U3/index.html">Actividad 2: Modelo 3D en el model-viewer </a>
     <br>
     <br>
 
-    
+    <div class="perfil">
+        <img src="perfil.jpg" alt="Imagen de perfil">
+    </div>
+
+    <div class="presentacion">
+        <h2>Mildred Sivilla Ramirez, 38919</h2>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="contenedor">
+
+        <h3>Actividades</h3>
+
+        <div class="unidad">
+            <h4>Unidad 1</h4>
+
+            <a href="Actividades/A2/pagina 1.html">Actividad 2: Página html básica</a>
+            <a href="Actividades/PGG/actextra.html">Actividad Página Golden Globes</a>
+            <a href="Actividades/A4/artecanvas.html">Actividad 4: Arte en Canvas</a>
+            <a href="Actividades/A4.2/retocanvas.html">Actividad Retocanvas</a>
+            <a href="Actividades/PIT/proyectoteclado.html">Proyecto: Interactivo con el teclado</a>
+        </div>
+
+        <div class="unidad">
+            <h5>Unidad 2</h5>
+
+            <a href="Actividades/A2U2/Rotacionmouse.html">Actividad 2: Animación rotación al mouse</a>
+            <a href="Actividades/A3U2/ondasi.html">Actividad 3: Animación con onda sinoidal</a>
+            <a href="Actividades/A4U2/RetoOndasSi.html">Actividad 4: Reto onda sinoidal</a>
+            <a href="Actividades/A5U2/dibujocanvas.html">Actividad 5: Dibujo de figuras en el canvas</a>
+            <a href="Actividades/A6U2/paint.html">Actividad 6: Paint App personalizado</a>
+            <a href="Actividades/A7U2/simreloj.html">Actividad 7: Simulación de reloj</a>
+            <a href="Actividades/A8U2/nave.html">Actividad 8: Nave personalizada</a>
+        </div>
+
+        <div class="unidad">
+            <h5>Unidad 3</h5>
+
+            <a href="Actividades/A2U3/index.html">Actividad 2: Modelo 3D en el model-viewer</a>
+        </div>
+
+    </div>
+
+    <div class="pie">
+        Animación Dinámica | Portafolio de actividades
+    </div>
+
 </body>
-
 </html>
