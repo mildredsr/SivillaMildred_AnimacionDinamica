@@ -1,27 +1,224 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <title>&lt;model-viewer&gt; template</title>
+<html lang="es">
+
+<head>
+    <title>Modelo 3D - Acuario</title>
+
     <meta charset="utf-8">
-    <meta name="description" content="&lt;model-viewer&gt; template">
+    <meta name="description" content="Modelo 3D interactivo de una planta de acuario">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link type="text/css" href="./styles.css" rel="stylesheet"/>
-  </head>
-  <body>
-    <!-- <model-viewer> HTML element -->
-    <model-viewer src="pixellabs-aquarium-plant-4590.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="0.71" exposure="0.7" shadow-softness="1">
-      <div class="progress-bar hide" slot="progress-bar">
-          <div class="update-bar"></div>
-      </div>
-      <button slot="ar-button" id="ar-button">
-          View in your space
-      </button>
-      <div id="ar-prompt">
-          <img src="ar_hand_prompt.png">
-      </div>
-    </model-viewer>  
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            text-align: center;
+
+            background-color: #70d5e9;
+
+            background-image:
+                linear-gradient(
+                    rgba(0, 115, 175, 0.25),
+                    rgba(0, 180, 195, 0.30)
+                ),
+                url("../../fondo.gif");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            color: white;
+        }
+
+        header {
+            padding: 30px 15px;
+
+            background: rgba(0, 115, 185, 0.35);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.65);
+
+            box-shadow:
+                0 4px 15px rgba(0, 80, 150, 0.15),
+                inset 0 2px 8px rgba(255,255,255,0.2);
+        }
+
+        h1 {
+            margin: 0;
+
+            font-size: 38px;
+            letter-spacing: 2px;
+
+            color: white;
+
+            text-shadow:
+                0 2px 5px rgba(0,70,130,0.5),
+                0 0 12px rgba(120,230,255,0.7);
+        }
+
+        main {
+            width: 90%;
+            max-width: 1000px;
+
+            margin: 45px auto;
+        }
+
+        .panel {
+            padding: 25px;
+
+            background: rgba(220, 248, 255, 0.25);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            border: 1px solid rgba(255,255,255,0.65);
+            border-radius: 25px;
+
+            box-shadow:
+                0 8px 25px rgba(0, 80, 150, 0.18),
+                inset 0 2px 8px rgba(255,255,255,0.45);
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 550px;
+
+            background: rgba(190, 240, 255, 0.18);
+
+            border: 1px solid rgba(255,255,255,0.55);
+            border-radius: 18px;
+
+            --poster-color: transparent;
+        }
+
+        #ar-button {
+            background: rgba(255,255,255,0.85);
+
+            border: 1px solid white;
+            border-radius: 25px;
+
+            padding: 12px 22px;
+
+            color: rgb(15, 105, 165);
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .regresar {
+            display: inline-block;
+
+            margin-top: 30px;
+            padding: 13px 28px;
+
+            background: rgba(255,255,255,0.35);
+
+            border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 25px;
+
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+
+            box-shadow:
+                0 4px 12px rgba(0,80,150,0.15),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+
+            transition: 0.3s;
+        }
+
+        .regresar:hover {
+            background: rgba(255,255,255,0.9);
+            color: rgb(0, 125, 185);
+
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 25px 10px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            main {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .panel {
+                padding: 15px;
+            }
+
+            model-viewer {
+                height: 400px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Modelo 3D: Planta de acuario</h1>
+    </header>
+
+    <main>
+
+        <div class="panel">
+
+            <model-viewer
+                src="pixellabs-aquarium-plant-4590.glb"
+                ar
+                ar-modes="webxr scene-viewer quick-look"
+                camera-controls
+                tone-mapping="neutral"
+                poster="poster.webp"
+                shadow-intensity="0.71"
+                exposure="0.7"
+                shadow-softness="1">
+
+                <div class="progress-bar hide" slot="progress-bar">
+                    <div class="update-bar"></div>
+                </div>
+
+                <button slot="ar-button" id="ar-button">
+                    View in your space
+                </button>
+
+                <div id="ar-prompt">
+                    <img src="ar_hand_prompt.png">
+                </div>
+
+            </model-viewer>
+
+        </div>
+
+        <a class="regresar" href="../../index.html">
+            Regresar
+        </a>
+
+    </main>
+
     <script src="script.js"></script>
-    <!-- Loads <model-viewer> for browsers: -->
+
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.4.0/model-viewer.min.js"></script>
-  </body>
+
+</body>
 </html>
